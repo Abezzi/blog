@@ -8,9 +8,10 @@ from django.utils.html import format_html
 user_model = get_user_model()
 register = template.Library()
 
+
 @register.filter
 def author_details(author, current_user=None):
-    if not isinstance(author, user_model): # to check if we are working with an User 
+    if not isinstance(author, user_model):  # to check if we are working with an User
         # return empty string as safe default
         return ""
 
@@ -29,7 +30,8 @@ def author_details(author, current_user=None):
         prefix = ""
         suffix = ""
 
-    return format_html('{}{}{}', prefix, name, suffix)
+    return format_html("{}{}{}", prefix, name, suffix)
+
 
 @register.simple_tag
 def row(extra_classes=None):
@@ -40,8 +42,18 @@ def row(extra_classes=None):
 def endrow():
     return format_html("</div>")
 
+
+@register.simple_tag
+def col(extra_classes=None):
+    return format_html('<div class="col {}">', extra_classes)
+
+
+@register.simple_tag
+def endcol():
+    return format_html("</div>")
+
+
 @register.inclusion_tag("blog/post-list.html")
 def recent_posts(post):
     posts = Post.objects.exclude(pk=post.pk)[:5]
     return {"title": "Recent Posts", "posts": posts}
-

@@ -8,6 +8,7 @@
   <div class="col">{{ post.content|safe }}</div>
 {% endrow %}
 
+{% include "blog/post-comments.html" %}
 {% row %}
   <div class="col">
     {% recent_posts post %}
